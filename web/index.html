@@ -286,6 +286,7 @@
             <a href="predict.html" class="nav-link" data-section="prediction">Prediction</a>
             <a href="explore.html" class="nav-link" data-section="datasets">Explore</a>
             <a href="about.html" class="nav-link" data-section="about">About Us</a>
+            <a href="resource.html" class="nav-link" data-section="about">Resources</a>
         </nav>
         
         <div class="top-right">
@@ -313,40 +314,109 @@
            
 
             
-           <h3>Challenge</h3>
-<ul>
-    <li>Space telescopes such as <strong>Kepler, K2, and TESS</strong> have collected extensive exoplanetary data over the years.</li>
-    <li>Manual classification of exoplanets is time-consuming and susceptible to human error.</li>
-    <li>Automating this process using <strong>AI and Machine Learning</strong> can accelerate discoveries and improve accuracy.</li>
-    <li>The objective is to develop models that can classify new candidates as <strong>Confirmed</strong>, <strong>Candidate</strong>, or <strong>False Positive</strong>.</li>
-</ul>
+          <section id="project-overview" class="container">
+  <h2>Hunt for Exoplanets — Project Overview</h2>
 
-<h3>Approach and Methodology</h3>
-<ul>
-    <li>Preprocessing exoplanet datasets to handle missing values, normalize features, and encode categorical data.</li>
-    <li>Training multiple machine learning models such as Random Forest, SVM, and Logistic Regression for tabular features, and LSTM or 1D CNN for time-series light curve data.</li>
-    <li>Comparing model performance on author-provided features versus automatically extracted features using feature engineering libraries like TSFEL.</li>
-    <li>Integrating the best-performing model into the web interface to allow real-time classification of user-provided data.</li>
-</ul>
+  <h3>Summary</h3>
+  <p>
+    Space-based surveys have produced vast volumes of transit photometry and catalog data from missions such as
+    <strong>Kepler</strong>, <strong>K2</strong>, and <strong>TESS</strong>. While many discoveries were made through manual vetting,
+    modern <strong>AI / ML</strong> techniques enable automated, scalable, and repeatable identification of exoplanet signals.
+    This project builds and deploys ML models that classify candidates into <em>Confirmed</em>, <em>Candidate</em>, or <em>False Positive</em>,
+    and integrates the best models into an interactive web interface for exploration and validation.
+  </p>
 
-<h3>Data Sets</h3>
-<p>The data driving the AI models comes from reliable public sources, primarily from <strong>NASA’s Exoplanet Archive</strong>:</p>
-<ul>
-    <li><strong>Kepler Mission:</strong> Over 2,600 confirmed exoplanets and thousands of candidates.</li>
-    <li><strong>K2 Mission:</strong> Extended Kepler’s mission with a slightly different orbit and survey pattern.</li>
-    <li><strong>TESS Mission:</strong> Current mission surveying nearby stars for new exoplanets.</li>
-    <li>Each dataset includes features such as orbital period, transit duration, planet radius, stellar parameters, and transit depth.</li>
-</ul>
+  <h3>Background</h3>
+  <ul>
+    <li>
+      Many exoplanets are detected using the <strong>transit method</strong> — monitoring stellar brightness for characteristic dips
+      produced when a planet crosses in front of its host star.
+    </li>
+    <li>
+      Kepler provided nearly a decade of continuous photometry; K2 extended that legacy with a different survey pattern; TESS
+      continues to survey nearby stars since 2018.
+    </li>
+    <li>
+      Each mission publishes public catalogs containing confirmed planets, candidates, and false positives alongside features
+      such as orbital period, transit duration, planet radius, stellar parameters, and transit depth.
+    </li>
+  </ul>
 
-<h3>Technical Stack</h3>
-<p>The project is built using a modern web and AI/ML stack for high performance and interactivity:</p>
-<ul>
-    <li><strong>Python:</strong> Data preprocessing, machine learning model training, and prediction.</li>
-    <li><strong>Scikit-learn / TensorFlow / PyTorch:</strong> Core ML frameworks for model development.</li>
-    <li><strong>Flask / FastAPI:</strong> Backend API serving model predictions to the web interface.</li>
-    <li><strong>React.js:</strong> Frontend framework for dynamic user interaction.</li>
-    <li><strong>Three.js:</strong> 3D visualization of planets, orbits, and system simulation.</li>
-</ul>
+  <h3>Challenge</h3>
+  <ul>
+    <li>Manual classification is slow and can be inconsistent across human vetters.</li>
+    <li>Large-scale automated analysis must robustly handle noise, gaps, and variable-quality observations.</li>
+    <li>The central goal: create models that can reliably label new observations as <strong>Confirmed</strong>, <strong>Candidate</strong>, or <strong>False Positive</strong>.</li>
+  </ul>
+
+  <h3>Objectives</h3>
+  <ul>
+    <li>Train ML models on one or more NASA mission datasets to classify exoplanetary candidates.</li>
+    <li>Compare performance between models trained on author-provided catalog features and models trained on engineered or learned features from raw light curves.</li>
+    <li>Provide a web interface that allows users to upload or paste candidate data, run predictions, and visualize model outputs and confidence.</li>
+    <li>Document preprocessing, model decisions, and evaluation so results are transparent and reproducible.</li>
+  </ul>
+
+  <h3>Data Sources</h3>
+  <p>
+    Primary datasets come from NASA’s public archives for:
+  </p>
+  <ul>
+    <li><strong>Kepler</strong> — long-baseline photometry and object catalogs.</li>
+    <li><strong>K2</strong> — extended Kepler observations with multiple campaigns.</li>
+    <li><strong>TESS</strong> — wide-field short-cadence survey of nearby stars.</li>
+  </ul>
+  <p>
+    Dataset fields commonly used: orbital period, transit duration, transit depth, planet radius, stellar effective temperature,
+    surface gravity, metallicity, and photometric time-series (light curves).
+  </p>
+
+  <h3>Approach & Methodology</h3>
+  <ul>
+    <li>
+      <strong>Preprocessing:</strong> impute or remove missing values, normalize/scale numerical features, encode categoricals,
+      de-trend and denoise light curves, and handle class imbalance.
+    </li>
+    <li>
+      <strong>Feature strategies:</strong> evaluate author-provided catalog features vs. automatically extracted features (e.g., TSFEL,
+      custom time-series feature extraction) and learned representations (1D CNN / LSTM).
+    </li>
+    <li>
+      <strong>Modeling:</strong> classical classifiers (Random Forest, SVM, Logistic Regression) for tabular features; deep models
+      (1D CNN, LSTM, Transformer-style encoders) for raw light-curve sequences.
+    </li>
+    <li>
+      <strong>Evaluation:</strong> use precision, recall, F1, ROC-AUC, and confusion matrices across cross-validation folds and holdout sets.
+      Emphasize calibration and false-positive control.
+    </li>
+    <li>
+      <strong>Deployment:</strong> expose model inference through a lightweight API (Flask / FastAPI) and integrate into the frontend
+      with interactive visualizations and downloadable CSV results.
+    </li>
+  </ul>
+
+  <h3>Technical Stack</h3>
+  <ul>
+    <li><strong>Data & ML:</strong> Python, NumPy, pandas, Scikit-learn, TensorFlow / PyTorch, TSFEL (optional)</li>
+    <li><strong>Backend:</strong> Flask or FastAPI to serve model predictions and file uploads</li>
+    <li><strong>Frontend:</strong> React.js for UI, Three.js for 3D visualizations (optional), and D3 or Chart.js for plots</li>
+    <li><strong>DevOps:</strong> Docker for reproducible environments, GitHub for version control, and optional CI for model testing</li>
+  </ul>
+
+  <h3>User Interaction</h3>
+  <ul>
+    <li>Upload CSV files or paste candidate parameters for instant classification.</li>
+    <li>Visualize light curves with model overlays and per-sample confidence scores.</li>
+    <li>Download prediction results and view model diagnostics to support scientific review.</li>
+  </ul>
+
+  <h3>Call to action</h3>
+  <p>
+    Explore the <a href="explore.html">Explore</a> page for datasets, model training details, and interactive demos. Visit the
+    <a href="resource.html">Resources</a> tab for direct links to NASA archives and example CSVs to test locally.
+  </p>
+</section>
+
 
         </div>
     </div>
@@ -780,16 +850,21 @@
     animate();
     </script>
 </body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-left">
-      <p>NASA Space Apps Challenge 2025</p>
+      <p>&copy; 2025 NASA Space Apps Challenge</p>
     </div>
     <div class="footer-right">
-      <a href="https://github.com/Prathamesh603" target="_blank">
+      <a href="https://github.com/Prathamesh603" target="_blank" aria-label="Visit Prathamesh's GitHub profile">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="footer-icon">
       </a>
-      <a href="https://www.linkedin.com/in/prathamesh-rajput-5364802b6/" target="_blank">
+      <a href="https://www.linkedin.com/in/prathamesh-rajput-5364802b6/" target="_blank" aria-label="Visit Prathamesh's LinkedIn profile">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" class="footer-icon">
       </a>
     </div>
@@ -797,45 +872,80 @@
 </footer>
 
 <style>
+/* Define a color palette using CSS variables for easy management */
+:root {
+  --footer-bg: rgba(10, 25, 47, 0.8); /* Dark, semi-transparent navy blue */
+  --footer-text: #e6f1ff; /* Light blueish-white for text */
+  --footer-icon-color: #ffffff; /* Pure white for icons */
+}
+
 .footer {
-  background: #2600ff; /* glass effect */
-  backdrop-filter: blur(12px);
-  padding: 20px 40px;
-  color: #000000;
-  font-family: 'Inter', sans-serif,solid;
+  /* Use the variable for the background */
+  background: var(--footer-bg);
+  /* This creates the "glass" effect by blurring content behind the footer */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  
+  padding: 1rem 2rem; /* Using rem for scalable sizing */
+  color: var(--footer-text);
+  font-family: 'Inter', sans-serif; /* Cleaner font declaration */
+  
   display: flex;
   justify-content: center;
+  align-items: center;
+  
+  /* Add a subtle top border for definition */
+  border-top: 1px solid rgba(7, 17, 222, 0.1);
 }
 
 .footer-container {
   display: flex;
   justify-content: space-between;
-  align-items: left;
-  max-width: 1000px;
+  align-items: center;
   width: 100%;
+  max-width: 1100px; /* Slightly wider for modern screens */
 }
 
 .footer-left p {
   margin: 0;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400; /* Regular weight can look cleaner */
 }
 
-.footer-right a {
-  margin-left: 15px;
-  display: inline-block;
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Use gap for consistent spacing between icons */
 }
 
 .footer-icon {
   width: 24px;
   height: 24px;
-  filter: invert(95%) sepia(0%) saturate(0%) hue-rotate(190deg) brightness(105%) contrast(100%);
-  transition: transform 0.3s ease;
+  /* A simpler filter to turn the icons white */
+  filter: invert(1);
+  opacity: 0.8; /* Slightly muted icons look more professional */
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.footer-icon:hover {
-  transform: scale(1.2);
+.footer-right a:hover .footer-icon {
+  opacity: 1; /* Full opacity on hover */
+  transform: scale(1.15) translateY(-2px); /* Add a subtle lift effect */
+}
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column; /* Stack items vertically on small screens */
+    gap: 1rem; /* Add space between the text and the icons */
+  }
+
+  .footer-left {
+    order: 2; /* Move the copyright text below the icons */
+  }
+
+  .footer-right {
+    order: 1; /* Move icons to the top */
+  }
 }
 </style>
-
 </html>

@@ -51,6 +51,7 @@
             top: 0;
             left: 0;
             width: 100%;
+            margin-top: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -237,6 +238,7 @@
             <a href="predict.html" class="nav-link">Prediction</a>
             <a href="explore.html" class="nav-link active">Explore</a>
             <a href="about.html" class="nav-link">About Us</a>
+            <a href="resource.html" class="nav-link" data-section="about">Resources</a>
         </nav>
         
         <div class="top-right"></div>
@@ -466,4 +468,102 @@
 
     </script>
 </body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <p>&copy; 2025 NASA Space Apps Challenge</p>
+    </div>
+    <div class="footer-right">
+      <a href="https://github.com/Prathamesh603" target="_blank" aria-label="Visit Prathamesh's GitHub profile">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="footer-icon">
+      </a>
+      <a href="https://www.linkedin.com/in/prathamesh-rajput-5364802b6/" target="_blank" aria-label="Visit Prathamesh's LinkedIn profile">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" class="footer-icon">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* Define a color palette using CSS variables for easy management */
+:root {
+  --footer-bg: rgba(10, 25, 47, 0.8); /* Dark, semi-transparent navy blue */
+  --footer-text: #e6f1ff; /* Light blueish-white for text */
+  --footer-icon-color: #ffffff; /* Pure white for icons */
+}
+
+.footer {
+  /* Use the variable for the background */
+  background: var(--footer-bg);
+  /* This creates the "glass" effect by blurring content behind the footer */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  
+  padding: 1rem 2rem; /* Using rem for scalable sizing */
+  color: var(--footer-text);
+  font-family: 'Inter', sans-serif; /* Cleaner font declaration */
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Add a subtle top border for definition */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px; /* Slightly wider for modern screens */
+}
+
+.footer-left p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400; /* Regular weight can look cleaner */
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Use gap for consistent spacing between icons */
+}
+
+.footer-icon {
+  width: 24px;
+  height: 24px;
+  /* A simpler filter to turn the icons white */
+  filter: invert(1);
+  opacity: 0.8; /* Slightly muted icons look more professional */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.footer-right a:hover .footer-icon {
+  opacity: 1; /* Full opacity on hover */
+  transform: scale(1.15) translateY(-2px); /* Add a subtle lift effect */
+}
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column; /* Stack items vertically on small screens */
+    gap: 1rem; /* Add space between the text and the icons */
+  }
+
+  .footer-left {
+    order: 2; /* Move the copyright text below the icons */
+  }
+
+  .footer-right {
+    order: 1; /* Move icons to the top */
+  }
+}
+</style>
 </html>
