@@ -55,11 +55,16 @@
             align-items: center;
             flex: 1;
         }
+        .top-right {
+            flex: 1;
+        }
 
         .top-left img {
             height: 100px; 
             margin-right: 10px;
         }
+        
+        
         
         nav#main-nav {
             display: flex;
@@ -87,9 +92,7 @@
             background-color: #2600ff;
         }
         
-        .top-right {
-            flex: 1;
-        }
+       
         
         /* --- MAIN CONTENT & CARD STYLES --- */
         .title { 
@@ -122,6 +125,7 @@
             border: 1px solid rgba(38, 151, 255, 0.3);
             box-shadow: 0 0 15px rgba(38, 151, 255, 0.4);
             transition: all 0.4s ease;
+            margin-left: 20px;
         }
 
         .card:hover {
@@ -193,14 +197,16 @@
         
         <nav id="main-nav">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="predict.html" class="nav-link">Prediction</a>
+            <a href="http://127.0.0.1:8000/predict.html" class="nav-link">Prediction</a>
             <a href="explore.html" class="nav-link">Explore</a>
             <a href="about.html" class="nav-link active">About Us</a>
             <a href="resource.html" class="nav-link" data-section="about">Resources</a>
         </nav>
         
+        
         <div class="top-right">
-            </div>
+            
+        </div>
     </header>
 
     <main>

@@ -120,14 +120,20 @@
             font-size: 2rem;
             color: #2697FF;
             margin-top: 0;
+            margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(38, 151, 255, 0.5);
+            text-align: center;
         }
         
-        .content-section p, .content-section li {
+        .content-section p, .content-section li, .content-section ol {
             font-size: 1.1rem;
             line-height: 1.7;
             color: #D3D3D3;
+        }
+
+        .content-section strong {
+            color: #ffffff;
         }
 
         .content-section a {
@@ -140,16 +146,89 @@
         .content-section a:hover {
             color: #80bfff;
         }
+        
+        /* --- SPECIFIC SECTION STYLES ADAPTED FROM NEW CONTENT --- */
+        .info-grid, .model-cards, .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .info-card, .model-card, .impact-card {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .info-card h3, .model-card h3, .impact-card h4, .model-card .accuracy {
+            font-family: 'Orbitron', sans-serif;
+            color: #58a6ff;
+            margin-bottom: 15px;
+        }
+        
+        .model-card.best {
+            border-color: #2697FF;
+            position: relative;
+        }
+        .best-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2600ff;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
 
-        .content-section ul {
-            list-style-type: '★';
+        .model-card .accuracy {
+            font-size: 2.5rem;
+            margin: 10px 0;
+            color: #ffffff;
+        }
+
+        .model-features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        
+        .content-section ul, .content-section ol {
+            list-style-type: '★ ';
             padding-left: 25px;
         }
-         .content-section ul li {
+        .content-section ul li, .content-section ol li {
             padding-left: 15px;
-         }
+            margin-bottom: 10px;
+        }
 
-        /* --- SPECIFIC SECTION STYLES --- */
+        .comparison-table, .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .comparison-table th, .performance-table th,
+        .comparison-table td, .performance-table td {
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+
+        .comparison-table th, .performance-table th {
+            background-color: rgba(38, 151, 255, 0.2);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .check-icon { color: #4ade80; }
+        .cross-icon { color: #ff6347; }
+        
         .dataset-links {
             display: flex;
             justify-content: space-around;
@@ -175,33 +254,16 @@
         }
 
         .chart-wrapper {
-             background: rgba(0,0,0,0.2);
-             padding: 20px;
-             border-radius: 10px;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
         }
         
-        .performance-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        .performance-table th, .performance-table td {
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: left;
-        }
-
-        .performance-table th {
-            background-color: rgba(38, 151, 255, 0.2);
-            font-family: 'Orbitron', sans-serif;
-        }
-
         .cta-button {
             display: block;
             width: fit-content;
             margin: 40px auto 0 auto;
-            padding: 18px 40px;
+            padding: 18px 20px;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.2rem;
             font-weight: bold;
@@ -217,17 +279,15 @@
         .cta-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(38, 0, 255, 1);
+            
         }
-
     </style>
 </head>
 <body>
-    <!-- Starfield Background -->
     <div id="canvas-container">
         <canvas id="star-canvas"></canvas>
     </div>
 
-    <!-- Navigation Bar -->
     <header class="top-bar">
         <div class="top-left">
             <img src="images/nasa logo.png" alt="NASA Space App Challenge Logo"> 
@@ -235,7 +295,7 @@
         
         <nav id="main-nav">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="predict.html" class="nav-link">Prediction</a>
+            <a href="http://127.0.0.1:8000/predict.html" class="nav-link">Prediction</a>
             <a href="explore.html" class="nav-link active">Explore</a>
             <a href="about.html" class="nav-link">About Us</a>
             <a href="resource.html" class="nav-link" data-section="about">Resources</a>
@@ -244,25 +304,48 @@
         <div class="top-right"></div>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Section 1: Introduction -->
-        <section class="content-section" id="introduction">
-            <h2>What Are Exoplanets?</h2>
-            <p>
-                Exoplanets are planets that orbit stars other than our Sun. For centuries, they were the stuff of science fiction, but today we know our galaxy is teeming with them. Finding these distant worlds is the first step in answering humanity's biggest question: "Are we alone?"
-            </p>
-            <p>
-                Our project uses data primarily gathered via the <strong>transit method</strong>. Space telescopes like Kepler and TESS stare at thousands of stars, watching for tiny, periodic dips in their brightness. This dip can indicate that a planet is passing in front of its star, briefly blocking some of its light. 
-            </p>
+        <section class="content-section">
+            <h2>WHAT ARE EXOPLANETS?</h2>
+            <p>Planets orbiting stars beyond our solar system, discovered by observing the tiny dips in starlight they cause when passing in front of their star.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🪐 Definition</h3>
+                    <p>Exoplanets are planets that orbit stars outside our solar system. Over 5,000 have been confirmed, with thousands more candidates waiting for verification.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔭 Detection Method</h3>
+                    <p>The transit method detects exoplanets by measuring the decrease in starlight when a planet passes between the star and our observation satellite.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🛰️ NASA Missions</h3>
+                    <p>Kepler, K2, and TESS missions have collected massive amounts of data, enabling the discovery of thousands of new exoplanets through transit observations.</p>
+                </div>
+            </div>
         </section>
 
-        <!-- Section 2: NASA Datasets -->
-        <section class="content-section" id="datasets">
-            <h2>NASA Datasets: The Source of Truth</h2>
-            <p>
-                Our AI model is trained on publicly available, high-quality data from NASA's premier planet-hunting missions. These datasets contain thousands of observations, each with features like orbital period, transit depth, stellar radius, and more.
-            </p>
+        <section class="content-section">
+            <h2>A UNIVERSE OF WORLDS</h2>
+            <p>Confirmed exoplanets come in a wide variety of sizes and types, many of which are unlike anything found in our own solar system.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Gas Giants</h3>
+                    <p>Large planets composed mostly of helium and hydrogen, similar to Jupiter and Saturn. "Hot Jupiters" are gas giants that orbit very close to their parent star.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Super-Earths</h3>
+                    <p>Potentially rocky planets that are more massive than Earth but lighter than Neptune. They are one of the most common types of exoplanets discovered.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Neptune-like</h3>
+                    <p>Planets similar in size to Neptune or Uranus, likely with a mixture of rock, ice, and a thick atmosphere of hydrogen, helium, and methane.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>NASA DATASETS</h2>
+            <p>Our AI model is trained on high-quality, open-source data from premier planet-hunting missions. These datasets contain thousands of observations with features like orbital period, transit depth, stellar radius, and more.</p>
             <div class="dataset-links">
                 <a href="https://exoplanetarchive.ipac.caltech.edu/docs/Kepler_KOI_docs.html" target="_blank">Kepler Mission Data</a>
                 <a href="https://exoplanetarchive.ipac.caltech.edu/docs/k2_mission.html" target="_blank">K2 Mission Data</a>
@@ -270,12 +353,9 @@
             </div>
         </section>
 
-        <!-- Section 3: Classification Labels -->
-        <section class="content-section" id="labels">
-            <h2>Understanding the Labels</h2>
-            <p>
-                Not every light dip is a planet. The raw data must be classified into one of three categories, which our AI learns to predict:
-            </p>
+        <section class="content-section">
+            <h2>UNDERSTANDING THE LABELS</h2>
+            <p>Not every dip in starlight is a planet. The raw data is classified into three categories, which our AI learns to predict:</p>
             <ul>
                 <li><strong>Confirmed Exoplanet:</strong> A signal that has been rigorously verified by scientists to be a genuine planet orbiting another star.</li>
                 <li><strong>Planetary Candidate:</strong> A signal that shows all the characteristics of an exoplanet transit but is awaiting further observation and confirmation.</li>
@@ -283,56 +363,41 @@
             </ul>
         </section>
 
-        <!-- Section 4: Data Preprocessing -->
-        <section class="content-section" id="preprocessing">
-            <h2>Data Preprocessing: From Raw to Ready</h2>
-            <p>
-                Raw data from space telescopes is messy. Before feeding it to our AI, we perform several crucial preprocessing steps to clean and standardize it. This ensures the model learns from meaningful patterns, not noise.
-            </p>
-             <ul>
+        <section class="content-section">
+            <h2>CHALLENGES IN DETECTION</h2>
+            <p>Identifying exoplanets is a monumental task filled with complex challenges that AI is uniquely suited to solve.</p>
+            <ul>
+                <li><strong>Manual Analysis:</strong> Most exoplanets were identified manually, which is time-consuming and labor-intensive.</li>
+                <li><strong>Massive Datasets:</strong> Missions generate terabytes of data. Manual review cannot keep pace with this volume.</li>
+                <li><strong>False Positives:</strong> Many candidates are false positives caused by stellar activity or instrumental noise.</li>
+                <li><strong>Hidden Discoveries:</strong> Thousands of potential exoplanets remain hidden in existing data, waiting for advanced analysis.</li>
+            </ul>
+        </section>
+        
+        <section class="content-section">
+            <h2>DATA PREPROCESSING: FROM RAW TO READY</h2>
+            <p>Raw data from space telescopes is messy. Before feeding it to our AI, we perform several crucial preprocessing steps to clean and standardize it.</p>
+            <ul>
                 <li><strong>Handling Missing Values:</strong> We use statistical methods (like mean or median imputation) to fill in gaps in the data where observations are missing.</li>
                 <li><strong>Feature Scaling:</strong> We normalize numerical features (e.g., stellar radius, orbital period) to a common scale. This prevents features with larger values from unfairly dominating the model's learning process.</li>
-                <li><strong>Feature Selection:</strong> We focus on the most impactful features for classification, such as transit duration, transit depth, and orbital period, to reduce complexity and improve model performance.</li>
+                <li><strong>Feature Selection:</strong> We focus on the most impactful features for classification, such as transit duration, transit depth, and orbital period, to reduce complexity and improve performance.</li>
             </ul>
         </section>
 
-        <!-- Section 5: Model Training -->
-        <section class="content-section" id="training">
-            <h2>AI/ML Model Training</h2>
-            <p>
-                We experimented with several machine learning algorithms to find the best-performing model for this classification task, including Logistic Regression, Random Forest, and Neural Networks. The models were trained to distinguish between the three labels based on the preprocessed data features.
-            </p>
-            <p>
-                We used techniques like <strong>GridSearch CV</strong> for hyperparameter tuning to optimize each model's configuration for the highest accuracy. Below are the performance metrics for our final selected model.
-            </p>
-            <table class="performance-table">
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Precision</th>
-                        <th>Recall</th>
-                        <th>F1-Score</th>
-                        <th>Overall Accuracy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Our Model</strong></td>
-                        <td>96.5%</td>
-                        <td>95.8%</td>
-                        <td>96.1%</td>
-                        <td rowspan="1" style="font-weight:bold; text-align:center; vertical-align: middle;">97.2%</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section class="content-section">
+            <h2>OUR SOLUTION: AI/ML AUTOMATION</h2>
+            <p>We developed an advanced AI/ML model trained on NASA's datasets that automatically analyzes light curve data and classifies results with high accuracy.</p>
+            <ul>
+                <li>Automated analysis of thousands of light curves in minutes.</li>
+                <li>Real-time classification: Confirmed, Candidate, or False Positive.</li>
+                <li>Analyzes 15+ features including orbital period, transit duration, and planetary radius.</li>
+                <li>Web interface for researchers to upload and analyze new data.</li>
+            </ul>
         </section>
 
-        <!-- Section 6: Prediction Workflow -->
-        <section class="content-section" id="workflow">
-            <h2>Prediction Workflow</h2>
-            <p>
-                Our tool makes this complex process simple. A researcher or enthusiast can upload their own data and get an instant classification.
-            </p>
+        <section class="content-section">
+            <h2>PREDICTION WORKFLOW</h2>
+            <p>Our tool makes this complex process simple. A researcher or enthusiast can upload their own data and get an instant classification.</p>
             <ol>
                 <li>User uploads a CSV file containing new transit data (orbital period, radius, etc.).</li>
                 <li>Our backend preprocesses the uploaded data using the same pipeline as the training data.</li>
@@ -341,12 +406,73 @@
             </ol>
         </section>
 
-        <!-- Section 7: Data Visualization -->
-        <section class="content-section" id="visualization">
-            <h2>Data Insights & Visualizations</h2>
-            <p>
-                Visualizing the vast exoplanet datasets reveals fascinating trends in our cosmic neighborhood.
-            </p>
+        <section class="content-section">
+            <h2>MACHINE LEARNING MODELS TESTED</h2>
+            <p>We tested multiple algorithms to find the best performer for classifying exoplanet candidates.</p>
+            <div class="model-cards">
+                <div class="model-card best">
+                    <span class="best-badge">BEST MODEL ⭐</span>
+                    <h3>🏆 XGBoost</h3>
+                    <div class="accuracy">95.8%</div>
+                    <p>Excels at handling imbalanced datasets and provides superior accuracy.</p>
+                </div>
+                <div class="model-card">
+                    <h3>🌲 Random Forest</h3>
+                    <div class="accuracy">92.4%</div>
+                    <p>Ensemble method using multiple decision trees for reliable classification.</p>
+                </div>
+                <div class="model-card">
+                    <h3>📊 Support Vector Machine</h3>
+                    <div class="accuracy">90.6%</div>
+                    <p>Effective in high-dimensional feature spaces with clear margins.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>WHY XGBOOST IS THE BEST MODEL</h2>
+            <p>XGBoost consistently outperformed other models in key areas crucial for astronomical data analysis.</p>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>XGBoost</th>
+                        <th>Random Forest</th>
+                        <th>SVM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Accuracy</strong></td>
+                        <td><span class="check-icon">✓</span> 95.8%</td>
+                        <td>92.4%</td>
+                        <td>90.6%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Imbalanced Data Handling</strong></td>
+                        <td><span class="check-icon">✓</span> Excellent</td>
+                        <td><span class="check-icon">✓</span> Good</td>
+                        <td><span class="cross-icon">✗</span> Fair</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Overfitting Control</strong></td>
+                        <td><span class="check-icon">✓</span> Excellent</td>
+                        <td><span class="check-icon">✓</span> Good</td>
+                        <td><span class="check-icon">✓</span> Good</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Missing Value Handling</strong></td>
+                        <td><span class="check-icon">✓</span> Automatic</td>
+                        <td><span class="check-icon">✓</span> Good</td>
+                        <td><span class="cross-icon">✗</span> Manual</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="content-section">
+            <h2>DATA INSIGHTS & DISCOVERY TRENDS</h2>
+            <p>Visualizing exoplanet discoveries and distribution patterns reveals key trends in our search.</p>
             <div class="visualization-container">
                 <div class="chart-wrapper">
                     <canvas id="exoplanetsByYear"></canvas>
@@ -356,19 +482,88 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Section 8: Call to Action -->
-        <section class="content-section" id="cta">
-            <h2>Ready to Find the Next World?</h2>
-            <p>
-                Our AI-powered tool puts the power of exoplanet detection in your hands. Upload your own transit data or use sample datasets to see the model in action and classify potential new worlds.
-            </p>
-            <a href="predict.html" class="cta-button">Try the Prediction Tool →</a>
+
+        <section class="content-section">
+            <h2>REAL-WORLD IMPACT</h2>
+            <p>Our AI model is transforming exoplanet research by making it faster, more accurate, and more accessible.</p>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>⚡ Faster Analysis</h4>
+                    <p>Process thousands of light curves in minutes instead of months.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🎯 High Accuracy</h4>
+                    <p>Reduces false positives and ensures reliable confirmations.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🔍 New Discoveries</h4>
+                    <p>Uncovers exoplanets missed during manual analysis.</p>
+                </div>
+            </div>
         </section>
 
+        <section class="content-section" id="cta">
+            <h2>Ready to Discover New Worlds?</h2>
+            <p>Explore our interactive tools and experience the future of exoplanet classification.</p>
+            <a href="index.html" class="cta-button">LAUNCH 3D VIEWER →</a>
+            <a href="predict.html" class="cta-button">LAUNCH PREDICTION TOOL →</a>
+
+        </section>
     </main>
 
-    <!-- JavaScript for Starfield & Charts -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <p>&copy; 2025 NASA Space Apps Challenge</p>
+        </div>
+        <div class="footer-right">
+          <a href="https://github.com/Prathamesh603" target="_blank" aria-label="Visit Prathamesh's GitHub profile">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="footer-icon">
+          </a>
+          <a href="https://www.linkedin.com/in/prathamesh-rajput-5364802b6/" target="_blank" aria-label="Visit Prathamesh's LinkedIn profile">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" class="footer-icon">
+          </a>
+        </div>
+      </div>
+    </footer>
+    <style>
+        :root {
+            --footer-bg: rgba(10, 25, 47, 0.8);
+            --footer-text: #e6f1ff;
+        }
+        .footer {
+            background: var(--footer-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            color: var(--footer-text);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+        }
+        .footer-left p { margin: 0; font-size: 1rem; font-weight: 400; }
+        .footer-right { display: flex; align-items: center; gap: 1rem; }
+        .footer-icon {
+            width: 24px; height: 24px; filter: invert(1);
+            opacity: 0.8; transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .footer-right a:hover .footer-icon { opacity: 1; transform: scale(1.15) translateY(-2px); }
+        @media (max-width: 600px) {
+            .footer-container { flex-direction: column; gap: 1rem; }
+            .footer-left { order: 2; }
+            .footer-right { order: 1; }
+        }
+    </style>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // --- STARFIELD ANIMATION ---
@@ -409,10 +604,10 @@
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
                 datasets: [{
                     label: 'Confirmed Exoplanet Discoveries',
-                    data: [877, 988, 1499, 340, 297, 187, 260, 245, 303, 198], // Sample Data
+                    data: [877, 988, 1499, 340, 297, 187, 260, 245, 303, 198, 156],
                     borderColor: '#2697FF',
                     backgroundColor: 'rgba(38, 151, 255, 0.2)',
                     tension: 0.3,
@@ -423,7 +618,7 @@
                 responsive: true,
                 plugins: {
                     legend: { labels: { color: chartFontColor } },
-                    title: { display: true, text: 'Discoveries by Year', color: chartFontColor, font: { size: 16 } }
+                    title: { display: true, text: 'Discoveries by Year', color: chartFontColor, font: { size: 16, family: "'Orbitron', sans-serif" } }
                 },
                 scales: {
                     x: { ticks: { color: chartFontColor }, grid: { color: 'rgba(255,255,255,0.1)' } },
@@ -440,7 +635,7 @@
                 labels: ['<1.25 (Earth-size)', '1.25-2 (Super-Earth)', '2-6 (Neptune-size)', '6-15 (Jupiter-size)', '>15 (Larger)'],
                 datasets: [{
                     label: 'Number of Confirmed Planets',
-                    data: [1689, 1801, 1987, 512, 114], // Sample Data
+                    data: [1689, 1801, 1987, 512, 114],
                     backgroundColor: [
                         'rgba(38, 151, 255, 0.7)',
                         'rgba(38, 151, 255, 0.6)',
@@ -457,7 +652,7 @@
                 responsive: true,
                 plugins: {
                     legend: { display: false },
-                    title: { display: true, text: 'Distribution of Planets by Radius (Earth=1)', color: chartFontColor, font: { size: 16 } }
+                    title: { display: true, text: 'Distribution by Planet Radius (Earth=1)', color: chartFontColor, font: { size: 16, family: "'Orbitron', sans-serif" } }
                 },
                  scales: {
                     x: { ticks: { color: chartFontColor }, grid: { color: 'rgba(255,255,255,0.1)' } },
@@ -465,105 +660,6 @@
                 }
             }
         });
-
     </script>
 </body>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
-
-
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-left">
-      <p>&copy; 2025 NASA Space Apps Challenge</p>
-    </div>
-    <div class="footer-right">
-      <a href="https://github.com/Prathamesh603" target="_blank" aria-label="Visit Prathamesh's GitHub profile">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="footer-icon">
-      </a>
-      <a href="https://www.linkedin.com/in/prathamesh-rajput-5364802b6/" target="_blank" aria-label="Visit Prathamesh's LinkedIn profile">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" class="footer-icon">
-      </a>
-    </div>
-  </div>
-</footer>
-
-<style>
-/* Define a color palette using CSS variables for easy management */
-:root {
-  --footer-bg: rgba(10, 25, 47, 0.8); /* Dark, semi-transparent navy blue */
-  --footer-text: #e6f1ff; /* Light blueish-white for text */
-  --footer-icon-color: #ffffff; /* Pure white for icons */
-}
-
-.footer {
-  /* Use the variable for the background */
-  background: var(--footer-bg);
-  /* This creates the "glass" effect by blurring content behind the footer */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* For Safari support */
-  
-  padding: 1rem 2rem; /* Using rem for scalable sizing */
-  color: var(--footer-text);
-  font-family: 'Inter', sans-serif; /* Cleaner font declaration */
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  /* Add a subtle top border for definition */
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1100px; /* Slightly wider for modern screens */
-}
-
-.footer-left p {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 400; /* Regular weight can look cleaner */
-}
-
-.footer-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem; /* Use gap for consistent spacing between icons */
-}
-
-.footer-icon {
-  width: 24px;
-  height: 24px;
-  /* A simpler filter to turn the icons white */
-  filter: invert(1);
-  opacity: 0.8; /* Slightly muted icons look more professional */
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.footer-right a:hover .footer-icon {
-  opacity: 1; /* Full opacity on hover */
-  transform: scale(1.15) translateY(-2px); /* Add a subtle lift effect */
-}
-
-/* --- Responsive Design for Mobile --- */
-@media (max-width: 600px) {
-  .footer-container {
-    flex-direction: column; /* Stack items vertically on small screens */
-    gap: 1rem; /* Add space between the text and the icons */
-  }
-
-  .footer-left {
-    order: 2; /* Move the copyright text below the icons */
-  }
-
-  .footer-right {
-    order: 1; /* Move icons to the top */
-  }
-}
-</style>
 </html>
