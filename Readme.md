@@ -37,7 +37,7 @@ For real-time predictions and interactive use, the project has been deployed as 
 2. **Backend Repository**: [NASA Backend Repo](https://github.com/Prathamesh603/Nasa-Space-App-Backend)  
    - Deployed as an API on Render to serve predictions for the frontend.
 
-3. **Link Of The Working Web Site**:[website link](https://nasa-frontend-qisq.onrender.com/index.html)
+3. **Link Of The Working Web Site**: [Website Link](https://nasa-frontend-qisq.onrender.com/index.html)
 
 ### How It Works
 - The frontend allows users to upload CSV files with exoplanet features.
